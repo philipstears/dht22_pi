@@ -20,6 +20,7 @@ use std::time::Duration;
 use rppal::gpio::Gpio;
 use rppal::gpio::Level;
 use rppal::gpio::Mode;
+use rppal::gpio::PullUpDown;
 
 use libc::SCHED_FIFO;
 use libc::SCHED_OTHER;
@@ -150,6 +151,8 @@ pub fn read(pin: u8) -> Result<Reading, ReadingError> {
             Ok(pin) => pin.into_io(Mode::Output)
         }
     };
+
+    gpio.set_pullupdown(PullUpDown::PullUp);
 
     let mut pulse_counts: [usize; DHT_PULSES*2] = [0; DHT_PULSES * 2];
                                                                       
